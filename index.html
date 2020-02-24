@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Index | Examen</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+   
+    <link href="Content/fontawesome-all.css" rel="stylesheet" />
+
+    <link href="Content/styles.css" rel="stylesheet" />
+</head>
+<body class="sb-nav-fixed">
+  
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    <h1 class="mt-4">Dashboard</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body text-right"><h1></h1></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    Madrid
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body text-right"><h1>10</h1></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    Londres
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body text-right"><h1>20</h1></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    New York
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-danger text-white mb-4">
+                                <div class="card-body text-right"><h1></h1></div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    Tokio
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card mb-8">
+                                <div class="card-header"><i class="fas fa-chart-bar mr-1"></i>Secretos</div>
+                                <div class="card-body">
+                                    <input class="form-control" type="text" placeholder="Secreto de Tokio" class="inputSecret">
+                                <button type="button" class="btn btn-success" id="b1">Consulta</button>
+                                <div class="mensaje" id="mensaje">
+
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2019</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+   
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        window.onload = function () {
+            this.setInterval(function () {
+                //TODO Representa la hora, minutos y segundos en dos cifras
+                var date = new Date;
+                var s = date.getSeconds();
+                var m = date.getMinutes();
+                var h = date.getHours();
+
+                document.getElementsByTagName('h1')[1].innerHTML = h + ':' + m + ':' + s;
+                document.getElementsByTagName('h1')[2].innerHTML = h-1 + ':' + m + ':' + s;
+                document.getElementsByTagName('h1')[3].innerHTML = h-6 + ':' + m + ':' + s;
+                document.getElementsByTagName('h1')[4].innerHTML = h+8 + ':' + m + ':' + s;
+            }, 1000);
+
+
+            //TODO Al clic del botón realiza la llamada al microservicio para conocer la respuesta.
+            //     Envia la consulta como parametro p
+            //     URL: http://demos.network/api/secretos.ashx
+        };
+
+        document.getElementById('b1').onclick = function () {
+            var p = document.getElementsByTagName('input')[0].value;
+            console.log(p);
+            var xhr = new XMLHttpRequest();
+            var url = 'http://demos.network/api/secretos.ashx?p='+p;
+            xhr.open('get', url, true);
+            xhr.setRequestHeader('Content-Type', 'text/plain');
+            xhr.onreadystatechange = function (e) {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var r = JSON.parse(xhr.responseText);
+                const newItem = document.createElement('p');
+const newContent = document.createTextNode(r.mensaje);
+newItem.appendChild(newContent);
+
+const items = document.querySelector('.mensaje');
+items.appendChild(newItem);
+                   console.log(r);
+                    }
+                }
+            ;
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
